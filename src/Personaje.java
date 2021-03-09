@@ -11,7 +11,7 @@ public class Personaje {
 	private PImage img;
 	private ArrayList<Bala> balas;
 
-	public Personaje(PApplet app, int posX, int posY, int sizeX, int sizeY, PImage img) {
+	public Personaje(PApplet app, int posX, int posY, int sizeX, int sizeY, PImage img,int vida) {
 		this.posX = posX;
 		this.posY = posY;
 		this.vida = vida;

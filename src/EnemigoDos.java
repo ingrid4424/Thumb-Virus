@@ -10,6 +10,7 @@ public class EnemigoDos extends Enemigo {
 
 	@Override
 	public void mover() {
+	setPosY(getPosY()+ getVel());
 		// TODO Auto-generated method stub
 		
 	}
