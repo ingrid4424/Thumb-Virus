@@ -22,13 +22,14 @@ public class Main extends PApplet {
 	// Instancis de personaje
 	Personaje personaje;
 
-	ArrayList<EnemigoUno[]> listEnemigoUno;
+	ArrayList<ArrayList <EnemigoUno>> listEnemigoUno;
 
-	ArrayList<EnemigoDos[]> listEnemigoDos;
+	ArrayList<ArrayList <EnemigoDos>>listEnemigoDos;
 
 	int pantallaActual;
 	int moverpersonaje;
 	int temporizador;
+	int puntaje;
 
 	public void settings() {
 		size(965, 726);
@@ -40,14 +41,15 @@ public class Main extends PApplet {
 		escenarioInstruccion = new Escenarios(this, 0, 0, 925, 726, loadImage("./images/Pantalla Instrucción.png"));
 		escenarioJuego = new Escenarios(this, 0, 0, 925, 726, loadImage("./images/Pantalla Juego.png"));
 		escenarioResumen = new Escenarios(this, 0, 0, 925, 726, loadImage("./images/Pantalla Resumen.png"));
-		personaje = new Personaje(this, width / 2 - 45, height / 2 + 250, 90, 90, loadImage("./images/Estrella.png"),3);
+		personaje = new Personaje(this, width / 2 - 45, height / 2 + 250, 90, 90, loadImage("./images/Estrella.png"),
+				3);
 		pantallaActual = 3;
 		moverpersonaje = 0;
 		temporizador = 0;
-		
+		puntaje = 0;
+
 		listEnemigoUno = new ArrayList<>();
 
-	
 		listEnemigoDos = new ArrayList<>();
 
 	}
@@ -73,45 +75,50 @@ public class Main extends PApplet {
 		case 3:
 			escenarioJuego.pintarEscenarios();
 			personaje.pintarPersonaje();
-			for(int i=0; i<personaje.getVida(); i++) {
-				personaje.pintarVidas(799 +(i*40), 45, 30, 30, loadImage("./images/Vida.png"));
+			for (int i = 0; i < personaje.getVida(); i++) {
+				personaje.pintarVidas(799 + (i * 40), 45, 30, 30, loadImage("./images/Vida.png"));
 			}
-			/*personaje.pintarVidas(799, 45, 30, 30, loadImage("./images/Vida.png"));
-			personaje.pintarVidas(844, 45, 30, 30, loadImage("./images/Vida.png"));
-			personaje.pintarVidas(888, 45, 30, 30, loadImage("./images/Vida.png"));*/
+			/*
+			 * personaje.pintarVidas(799, 45, 30, 30, loadImage("./images/Vida.png"));
+			 * personaje.pintarVidas(844, 45, 30, 30, loadImage("./images/Vida.png"));
+			 * personaje.pintarVidas(888, 45, 30, 30, loadImage("./images/Vida.png"));
+			 */
 			textSize(18);
-			text(temporizador, 120, 70);
-
+			text(temporizador, 112, 70);
+			text(puntaje, 68, 130);
 
 			for (int i = 0; i < listEnemigoUno.size(); i++) {
 
-				for (int j = 0; j < listEnemigoUno.get(i).length; j++) {
-					listEnemigoUno.get(i)[j].pintarEnemigo();
-					listEnemigoUno.get(i)[j].mover();
-				}
+				for (int j = 0; j < listEnemigoUno.get(i).size(); j++) {
+					listEnemigoUno.get(i).get(j).pintarEnemigo();
+					listEnemigoUno.get(i).get(j).mover();
+					}
 			}
 
 			for (int a = 0; a < listEnemigoDos.size(); a++) {
 
-				for (int k = 0; k < listEnemigoDos.get(a).length; k++) {
-					listEnemigoDos.get(a)[k].pintarEnemigo();
-					listEnemigoDos.get(a)[k].mover();               
+				for (int k = 0; k < listEnemigoDos.get(a).size(); k++) {
+					listEnemigoDos.get(a).get(k).pintarEnemigo();
+					listEnemigoDos.get(a).get(k).mover();
 
 				}
 			}
 
 			agregarEnemigos();
+			eliminarEnemigo();
 			temporizador();
 			perderVidas();
-			
-			if(gameOver()) {
-				pantallaActual ++;
+
+			if (gameOver()) {
+				pantallaActual++;
 			}
 			break;
 		case 4:
 			escenarioResumen.pintarEscenarios();
+			fill(255);
 			textSize(50);
-			text(temporizador, 460, 420);
+			text(temporizador, 468, 426);
+			text(puntaje, 486, 266);
 			break;
 		default:
 			break;
@@ -174,47 +181,74 @@ public class Main extends PApplet {
 	}
 
 	public void agregarEnemigos() {
-		EnemigoUno[] enemigosUno = new EnemigoUno[7];
-		for (int i = 0; i < enemigosUno.length; i++) {
-			enemigosUno[i] = new EnemigoUno(this, (i * 80) + 60, -50, 80, 80, 1,
-					loadImage("./images/Enemigo Chuspa.png"));
+		ArrayList<EnemigoUno> enemigosUno = new ArrayList<>();
+		for (int i = 0; i < 7; i++) {
+			enemigosUno.add( new EnemigoUno(this, (i * 100) + 60, -50, 80, 80, 1,
+					loadImage("./images/Enemigo Chuspa.png")));
 		}
 		if (frameCount % 180 == 0) {
 			listEnemigoUno.add(enemigosUno);
-			System.out.println(listEnemigoUno.size());
 		}
 
-		EnemigoDos[] enemigoDos = new EnemigoDos[7];
-		for (int a = 0; a < enemigoDos.length; a++) {
-			enemigoDos[a] = new EnemigoDos(this, (a * 100) + 100, -30, 80, 80, 3,
-					loadImage("./images/Enemigo Botella.png"));
+		ArrayList<EnemigoDos> enemigosDos = new ArrayList<>();
+		for (int a = 0; a < 7; a++) {
+			enemigosDos.add( new EnemigoDos(this, (a * 100) + 100, -80, 80, 80, 3,
+					loadImage("./images/Enemigo Botella.png")));
+	
 		}
 		if (frameCount % 90 == 0) {
-			listEnemigoDos.add(enemigoDos);
-			System.out.println(listEnemigoDos.get(0)[0]);
+			listEnemigoDos.add(enemigosDos);
 
 		}
 
 	}
-	
+
+	public void eliminarEnemigo() {
+		for (int a = 0; a < personaje.getBalas().size(); a++) {
+			for (int i = 0; i < listEnemigoDos.size(); i++) {
+
+				for (int j = 0; j < listEnemigoDos.get(i).size(); j++) {
+					if (dist(personaje.getBalas().get(a).getPosX(), personaje.getBalas().get(a).getPosY(),
+							listEnemigoDos.get(i).get(j).getPosX(),
+							listEnemigoDos.get(i).get(j).getPosY()) < personaje.getBalas().get(a).getSizeX()) {
+						listEnemigoDos.get(i).remove(j);
+						puntaje = puntaje + 1;
+						System.out.println("entr");
+					}
+				}
+			}
+
+		}
+
+	}
+
 	public void temporizador() {
-		if(frameCount %60 == 0) {
-			temporizador ++;
+		if (frameCount % 60 == 0) {
+			temporizador++;
 		}
 	}
-	
+
 	public void perderVidas() {
-		if(frameCount %60 == 0){
-			personaje.setVida(personaje.getVida()-1);
+		for (int i = 0; i < listEnemigoDos.size(); i++) {
+
+			for (int j = 0; j < listEnemigoDos.get(i).size(); j++) {
+				if(listEnemigoDos.get(i).get(j).getPosY()>730) {
+					listEnemigoDos.remove(i);
+					personaje.setVida(personaje.getVida() - 1);
+				}
+			}
 		}
+		/*
+		 * if (frameCount % 60 == 0) {  }
+		 */
 	}
-	
+
 	public boolean gameOver() {
 		if (personaje.getVida() == 0) {
 			return true;
 
 		}
 		return false;
-		
+
 	}
 }

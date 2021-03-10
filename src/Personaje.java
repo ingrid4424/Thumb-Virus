@@ -25,11 +25,9 @@ public class Personaje {
 	public void mover(int key) {
 		if(key == PConstants.LEFT) {
 			this.posX = this.posX-4;
-			System.out.println(this.posX);
 		}
 		if(key == PConstants.RIGHT) {
 			this.posX = this.posX+4;
-			System.out.println(this.posX);
 
 		}
 	}
@@ -113,9 +111,11 @@ public class Personaje {
 
 	public void disparar(int key) {
 		if(key == 32) {
-			balas.add(new Bala(app, posX+(sizeX/2), posY, 15, 15, -2));
+			balas.add(new Bala(app, posX+(sizeX/2), posY, 15, 15, -5));
 		}
 		System.out.println(balas.size());
 	}
+	
+
 
 }
