@@ -43,7 +43,7 @@ public class Main extends PApplet {
 		escenarioResumen = new Escenarios(this, 0, 0, 925, 726, loadImage("./images/Pantalla Resumen.png"));
 		personaje = new Personaje(this, width / 2 - 45, height / 2 + 250, 90, 90, loadImage("./images/Estrella.png"),
 				3);
-		pantallaActual = 3;
+		pantallaActual = 0;
 		moverpersonaje = 0;
 		temporizador = 0;
 		puntaje = 0;
@@ -257,7 +257,7 @@ public class Main extends PApplet {
 		for (int i = 0; i < listEnemigoDos.size(); i++) {
 
 			for (int j = 0; j < listEnemigoDos.get(i).size(); j++) {
-				if(listEnemigoDos.get(i).get(j).getPosY()>730) {
+				if(listEnemigoDos.get(i).get(j).getPosY()>700) {
 					listEnemigoDos.remove(i);
 					personaje.setVida(personaje.getVida() - 1);
 				}
