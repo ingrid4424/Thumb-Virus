@@ -283,7 +283,8 @@ public class Main extends PApplet {
 		listEnemigoUno.removeAll(listEnemigoUno);
 		temporizador = 0;
 		puntaje=0;
-		
+		personaje.getBalas().removeAll(personaje.getBalas());
+	
 		
 	}
 }
