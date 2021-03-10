@@ -210,15 +210,35 @@ public class Main extends PApplet {
 
 	public void eliminarEnemigo() {
 		for (int a = 0; a < personaje.getBalas().size(); a++) {
+			// eliminar enmigos dos
 			for (int i = 0; i < listEnemigoDos.size(); i++) {
 
 				for (int j = 0; j < listEnemigoDos.get(i).size(); j++) {
-					if (dist(personaje.getBalas().get(a).getPosX(), personaje.getBalas().get(a).getPosY(),
-							listEnemigoDos.get(i).get(j).getPosX(),
-							listEnemigoDos.get(i).get(j).getPosY()) < personaje.getBalas().get(a).getSizeX()) {
+					//dist(x,y,x2,y2);
+					if (dist(personaje.getBalas().get(a).getPosX(),
+							personaje.getBalas().get(a).getPosY(),
+							listEnemigoDos.get(i).get(j).getPosX()+(listEnemigoDos.get(i).get(j).getSizeX()/2),
+							listEnemigoDos.get(i).get(j).getPosY()+(listEnemigoDos.get(i).get(j).getSizeY()/2))
+							< personaje.getBalas().get(a).getSizeX()) {
 						listEnemigoDos.get(i).remove(j);
 						puntaje = puntaje + 1;
 						System.out.println("entr");
+					}
+				}
+			}
+			
+			for (int i = 0; i < listEnemigoUno.size(); i++) {
+
+				for (int j = 0; j < listEnemigoUno.get(i).size(); j++) {
+					//dist(x,y,x2,y2);
+					if (dist(personaje.getBalas().get(a).getPosX(),
+							personaje.getBalas().get(a).getPosY(),
+							listEnemigoUno.get(i).get(j).getPosX()+(listEnemigoUno.get(i).get(j).getSizeX()/2),
+							listEnemigoUno.get(i).get(j).getPosY()+(listEnemigoUno.get(i).get(j).getSizeY()/2))
+							< personaje.getBalas().get(a).getSizeX()) {
+						listEnemigoUno.get(i).remove(j);
+						puntaje = puntaje + 1;
+						//System.out.println("entr");
 					}
 				}
 			}
