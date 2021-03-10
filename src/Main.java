@@ -59,6 +59,7 @@ public class Main extends PApplet {
 
 		case 0:
 			escenarioInicial.pintarEscenarios();
+			reset();
 			break;
 		case 1:
 			escenarioContexto.pintarEscenarios();
@@ -119,6 +120,9 @@ public class Main extends PApplet {
 			textSize(50);
 			text(temporizador, 468, 426);
 			text(puntaje, 486, 266);
+			escenarioResumen.pintarBoton(width / 2 - 100, height / 2 + 220, 200, 100,
+					loadImage("./images/Boton reiniciar.png"));
+
 			break;
 		default:
 			break;
@@ -173,7 +177,8 @@ public class Main extends PApplet {
 
 			break;
 		case 4:
-
+			if (dist(478,634, mouseX, mouseY) < 75) {
+				pantallaActual = escenarioContexto.sgtePantalla(pantallaActual=-1);}
 			break;
 		default:
 			break;
@@ -183,7 +188,7 @@ public class Main extends PApplet {
 	public void agregarEnemigos() {
 		ArrayList<EnemigoUno> enemigosUno = new ArrayList<>();
 		for (int i = 0; i < 7; i++) {
-			enemigosUno.add( new EnemigoUno(this, (i * 100) + 60, -50, 80, 80, 1,
+			enemigosUno.add( new EnemigoUno(this, (i * 100) + 120, -60, 80, 80, 1,
 					loadImage("./images/Enemigo Chuspa.png")));
 		}
 		if (frameCount % 180 == 0) {
@@ -192,7 +197,7 @@ public class Main extends PApplet {
 
 		ArrayList<EnemigoDos> enemigosDos = new ArrayList<>();
 		for (int a = 0; a < 7; a++) {
-			enemigosDos.add( new EnemigoDos(this, (a * 100) + 100, -80, 80, 80, 3,
+			enemigosDos.add( new EnemigoDos(this, (a * 100) + 100, -80, 80, 80, 1,
 					loadImage("./images/Enemigo Botella.png")));
 	
 		}
@@ -250,5 +255,15 @@ public class Main extends PApplet {
 		}
 		return false;
 
+	}
+	
+	public void reset() {
+		personaje.setVida(3);
+		listEnemigoDos.removeAll(listEnemigoDos);
+		listEnemigoUno.removeAll(listEnemigoUno);
+		temporizador = 0;
+		puntaje=0;
+		
+		
 	}
 }
